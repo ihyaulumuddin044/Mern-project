@@ -3,8 +3,8 @@ import logo from '../../public/logo.png'
 
 const Navbar = () => {
   return (
-    <div>
-      <div className="navbar bg-base-100">
+    <header className='max-w-screen-2xl container mx-auto'>
+      <div className="navbar xl:px-20">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -35,7 +35,7 @@ const Navbar = () => {
         <li><a>Item 3</a></li>
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl"><img src={logo} alt="" /></a>
+    <a href='/'><img src={logo} alt="" /></a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -56,7 +56,7 @@ const Navbar = () => {
     <a className="btn">Button</a>
   </div>
 </div>
-    </div>
+    </header>
   )
 }
 
