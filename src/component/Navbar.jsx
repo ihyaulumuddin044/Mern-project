@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../public/logo.png";
 import { BiPhoneCall } from "react-icons/bi";
 
 const Navbar = () => {
+  const [isSticky, setIsSticky] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const offide = window.scrollY;
+      if (offide > 0) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const navItems = (
     <>
       <li>
@@ -46,8 +62,12 @@ const Navbar = () => {
     </>
   );
   return (
-    <header className="max-w-screen-2xl container mx-auto">
-      <div className="navbar xl:px-20">
+    <header className="max-w-screen-2xl container mx-auto fixed top-0 left-0 right-0 transition-all duration-300 ease-in-out">
+      <div className={`navbar xl:px-24 ${
+          isSticky
+            ? "shadow-md bg-base-100 transition-all duration-300 ease-in-out"
+            : ""
+        }`}>
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
