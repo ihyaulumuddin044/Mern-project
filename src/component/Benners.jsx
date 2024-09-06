@@ -41,7 +41,7 @@ const Benners = () => {
                     className="mask mask-star-2 bg-yellow-500"
                   />
                 </div>
-                <p className="text-red my-2">$15.00</p>
+                <p className="my-2"><span className="text-red ">$ </span>14.05</p>
               </div>
             </div>
             <div className="md:flex hidden bg-white py-2 px-3 rounded-xl items-center gap-3 shadow-md w-[270px]">
@@ -76,7 +76,7 @@ const Benners = () => {
                     className="mask mask-star-2 bg-yellow-500"
                   />
                 </div>
-                <p className="text-red my-2">$15.00</p>
+                <p className="my-2"><span className="text-red ">$ </span>15.00</p>
               </div>
             </div>
           </div>
