@@ -1,6 +1,72 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
 const Menu = () => {
+  const [menu, setMenu] = useState([]);
+  const [filtereditems, setFiltereditems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortOption, setSortOption] = useState("default");
+
+  // loading data
+  useEffect(() => {
+    // faetching data from backend
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/Menu.json");
+        const data = await response.json();
+        console.log(data);
+        setMenu(data);
+        filtereditems(data);
+      } catch (error) {
+        console.log("data not found", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // filtering data based on category
+  const filteritems = (category) => {
+    const filter =
+      category === "all"
+        ? menu
+        : menu.filter((item) => item.category === category);
+
+    setFiltereditems(filter);
+    setSelectedCategory(category);
+  };
+
+  // show all of the data
+  const showAll = () => {
+    setFiltereditems(menu);
+    setSelectedCategory("all");
+  };
+
+  // shorting by a-z, z-a low-high pricing, high-low pricing
+ const hendleShorChange = (option) => {
+   setSortOption(option);
+
+   let shortedItem = [...filtereditems];
+
+  //  logic
+  switch(option){
+    case "A-Z":
+      shortedItem.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "Z-A":
+      shortedItem.sort((a, b) => b.name.localeCompare(a.name));
+      break;
+    case "low-high":
+      shortedItem.sort((a, b) => a.price - b.price);
+      break;
+    case "high-low":
+      shortedItem.sort((a, b) => b.price - a.price);
+      break;
+    default:
+      // code block
+      // setFiltereditems(menu);
+  }
+  setFiltereditems(shortedItem);
+ } 
+
   return (
     <div>
       {/* menu banner */}
@@ -24,9 +90,14 @@ const Menu = () => {
       </div>
 
       {/* menu shop section */}
-      
+      <div className="section-container">
+        {/* filtering and sorting section */}
+        <div>filtering and sorting</div>
+        
+        {/* cards products */}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

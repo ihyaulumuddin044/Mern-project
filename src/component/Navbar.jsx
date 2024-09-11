@@ -22,7 +22,7 @@ const Navbar = () => {
   const navItems = (
     <>
       <li>
-        <a href="/home">Home</a>
+        <a href="/">Home</a>
       </li>
       <li tabIndex={0}>
         <details>
@@ -93,7 +93,7 @@ const Navbar = () => {
               {navItems}
             </ul>
           </div>
-          <a href="/home">
+          <a href="/">
             <img src={logo} alt="" />
           </a>
         </div>
