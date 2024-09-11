@@ -1,15 +1,18 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 import Navbar from '../component/Navbar'
-import Benners from '../component/Benners'
 import '../App.css'
 import Home from '../pages/home/Home'
 import Footer from '../component/Footer'
+
 
 const Main = () => {
   return (
     <div>
         <Navbar />
-        <Home />
+        <div className='min-h-screen'>
+        <Outlet />
+        </div>
         <Footer />
 
     </div>

@@ -1,10 +1,22 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
+import Home from "../pages/home/Home";
+import Menu from "../pages/Shoping/Menu";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    children: [
+      {
+        path: "/home",
+        element: <Home />,
+      },
+      {
+        path: "/menu",
+        element: <Menu />,
+      },
+    ],
   },
 ]);
 
