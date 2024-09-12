@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cards from "../../component/Cards";
-
+import { FaFilter } from "react-icons/fa";
 const Menu = () => {
   const [menu, setMenu] = useState([]);
   const [filtereditems, setFiltereditems] = useState([]);
@@ -42,31 +42,31 @@ const Menu = () => {
   };
 
   // shorting by a-z, z-a low-high pricing, high-low pricing
- const hendleShorChange = (option) => {
-   setSortOption(option);
+  const hendleShorChange = (option) => {
+    setSortOption(option);
 
-   let shortedItem = [...filtereditems];
+    let shortedItem = [...filtereditems];
 
-  //  logic
-  switch(option){
-    case "A-Z":
-      shortedItem.sort((a, b) => a.name.localeCompare(b.name));
-      break;
-    case "Z-A":
-      shortedItem.sort((a, b) => b.name.localeCompare(a.name));
-      break;
-    case "low-high":
-      shortedItem.sort((a, b) => a.price - b.price);
-      break;
-    case "high-low":
-      shortedItem.sort((a, b) => b.price - a.price);
-      break;
-    default:
+    //  logic
+    switch (option) {
+      case "A-Z":
+        shortedItem.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "Z-A":
+        shortedItem.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case "low-high":
+        shortedItem.sort((a, b) => a.price - b.price);
+        break;
+      case "high-low":
+        shortedItem.sort((a, b) => b.price - a.price);
+        break;
+      default:
       // code block
       // setFiltereditems(menu);
-  }
-  setFiltereditems(shortedItem);
- } 
+    }
+    setFiltereditems(shortedItem);
+  };
 
   return (
     <div>
@@ -89,26 +89,74 @@ const Menu = () => {
           </div>
         </div>
       </div>
-
       {/* menu shop section */}
       <div className="section-container">
         {/* filtering and sorting section */}
-
+        <div className="flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8">
           {/* All Category buttons */}
-        <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap">
-          <button onClick={showAll}>All</button>
-          <button onClick={() => filteritems("salad")}>Salad</button>
-          <button onClick={() => filteritems("pizza")}>Pizza</button>
-          <button onClick={() => filteritems("soup")}>Soups</button>
-          <button onClick={() => filteritems("dessert")}>Desserts</button>
-          <button onClick={() => filteritems("drinks")}>Drinks</button>
-
+          <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap">
+            <button
+              onClick={showAll}
+              className={selectedCategory === "all" ? "active" : ""}
+            >
+              All
+            </button>
+            <button
+              onClick={() => filteritems("salad")}
+              className={selectedCategory === "salad" ? "active" : ""}
+            >
+              Salad
+            </button>
+            <button
+              onClick={() => filteritems("pizza")}
+              className={selectedCategory === "pizza" ? "active" : ""}
+            >
+              Pizza
+            </button>
+            <button
+              onClick={() => filteritems("soup")}
+              className={selectedCategory === "soup" ? "active" : ""}
+            >
+              Soups
+            </button>
+            <button
+              onClick={() => filteritems("dessert")}
+              className={selectedCategory === "dessert" ? "active" : ""}
+            >
+              Desserts
+            </button>
+            <button
+              onClick={() => filteritems("drinks")}
+              className={selectedCategory === "drinks" ? "active" : ""}
+            >
+              Drinks
+            </button>
+          </div>
+          {/* shorting base filtering */}
+          <div className="flex justify-end mb-4 rounded-sm">
+            <div className="bg-black p-2">
+              <FaFilter className="h-4 w-4 text-white" />
+            </div>
+            {/* shorting option */}
+            <select
+              name="short"
+              id="shor"
+              onChange={(e) => hendleShorChange(e.target.value)}
+              value={sortOption}
+              className="bg-black py-2 px-1 text-white rounded-sm"
+            >
+              <option value="default">Default</option>
+              <option value="A-Z">A-Z</option>
+              <option value="Z-A">Z-A</option>
+              <option value="low-high">Low-High</option>
+              <option value="high-low">High-Low</option>
+            </select>
+          </div>
         </div>
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mt-4">
-        {filtereditems.map((item) => (
+          {filtereditems.map((item) => (
             <Cards key={item.id} item={item} />
-          ))
-        }
+          ))}
         </div>
         {/* cards products */}
       </div>
