@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Cards from "../../component/Cards";
 
 const Menu = () => {
   const [menu, setMenu] = useState([]);
@@ -15,7 +16,7 @@ const Menu = () => {
         const data = await response.json();
         console.log(data);
         setMenu(data);
-        filtereditems(data);
+        setFiltereditems(data);
       } catch (error) {
         console.log("data not found", error);
       }
@@ -92,8 +93,23 @@ const Menu = () => {
       {/* menu shop section */}
       <div className="section-container">
         {/* filtering and sorting section */}
-        <div>filtering and sorting</div>
-        
+
+          {/* All Category buttons */}
+        <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap">
+          <button onClick={showAll}>All</button>
+          <button onClick={() => filteritems("salad")}>Salad</button>
+          <button onClick={() => filteritems("pizza")}>Pizza</button>
+          <button onClick={() => filteritems("soup")}>Soups</button>
+          <button onClick={() => filteritems("dessert")}>Desserts</button>
+          <button onClick={() => filteritems("drinks")}>Drinks</button>
+
+        </div>
+        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mt-4">
+        {filtereditems.map((item) => (
+            <Cards key={item.id} item={item} />
+          ))
+        }
+        </div>
         {/* cards products */}
       </div>
     </div>
