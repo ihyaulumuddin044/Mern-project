@@ -1,27 +1,72 @@
-import React from 'react'
+import React from "react";
+import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Modal = () => {
   return (
     <div>
-      <dialog
-            id="my_modal_5"
-            className="modal modal-bottom sm:modal-middle"
-          >
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">
-                Press ESC key or click the button below to close
-              </p>
-              <div className="modal-action">
-                <form method="dialog">
-                  {/* if there is a button in form, it will close the modal */}
-                  <button className="btn">Close</button>
-                </form>
+      <dialog id="my_modal_5" className="modal modal-middle sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Login Please!</h3>
+          <div className="modal-action flex flex-col justify-center mt-0">
+            <form className="card-body" method="dialog">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  placeholder="email"
+                  className="input input-bordered"
+                  required
+                />
               </div>
-            </div>
-          </dialog>
-    </div>
-  )
-}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="password"
+                  className="input input-bordered"
+                  required
+                />
+                <label className="label mt-1">
+                  <a href="#" className="label-text-alt link link-hover">
+                    Forgot password?
+                  </a>
+                </label>
+              </div>
+              {/* error */}
 
-export default Modal
+              {/* login button */}
+              <div className="form-control mt-6">
+                <input type="submit" value={"Login"} className="btn bg-green" />
+              </div>
+              <p className="text-center my-2">
+                don't have an account?{" "}
+                <Link to="/signup" className="underline text-red ml-1">
+                  Signup Now
+                </Link>
+              </p>
+            </form>
+                {/* social login */}
+            <div className="text-center space-x-3 mb-7">
+              <button className="btn btn-circle hover:bg-green hover:text-white">
+                <FaGoogle/>
+              </button>
+              <button className="btn btn-circle hover:bg-green hover:text-white">
+                <FaFacebookF/>
+              </button>
+              <button className="btn btn-circle hover:bg-green hover:text-white">
+                <FaGithub/>
+              </button>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  );
+};
+
+export default Modal;
