@@ -6,6 +6,8 @@ const Menu = () => {
   const [filtereditems, setFiltereditems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("default");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(9);
 
   // loading data
   useEffect(() => {
@@ -33,12 +35,14 @@ const Menu = () => {
 
     setFiltereditems(filter);
     setSelectedCategory(category);
+    setCurrentPage(1)
   };
 
   // show all of the data
   const showAll = () => {
     setFiltereditems(menu);
     setSelectedCategory("all");
+    setCurrentPage(1)
   };
 
   // shorting by a-z, z-a low-high pricing, high-low pricing
@@ -66,7 +70,14 @@ const Menu = () => {
       // setFiltereditems(menu);
     }
     setFiltereditems(shortedItem);
+    selectedCategory(1)
   };
+
+  // pagation logic
+  const indexOfLastItems = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItems - itemsPerPage;
+  const currentItems = filtereditems.slice(indexOfFirstItem, indexOfLastItems);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -153,12 +164,27 @@ const Menu = () => {
             </select>
           </div>
         </div>
+        {/* product cards */}
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mt-4">
-          {filtereditems.map((item) => (
+          {currentItems.map((item) => (
             <Cards key={item.id} item={item} />
           ))}
         </div>
         {/* cards products */}
+      </div>
+      {/* pagination */}
+      <div className="flex justify-center py-8">
+        {
+          Array.from({length: Math.ceil(filtereditems.length / itemsPerPage)}).map((_, index) => (
+            <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`mx-2 px-2 rounded-full ${currentPage === index + 1 ? "bg-green text-white":"bg-gray-200"}`}
+            >
+              {index + 1}
+            </button>
+          ))
+        }
       </div>
     </div>
   );
