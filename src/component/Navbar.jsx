@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../public/logo.png";
-import { BiPhoneCall } from "react-icons/bi";
 import { FaRegUser } from "react-icons/fa";
 import Modal from "./Modal";
+import {AuntContext} from '../context/AuntProvider'
+
 
 const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
+
+  const {user} = useContext(AuntContext)
+  console.log(user)
+
+
   useEffect(() => {
     const handleScroll = () => {
       const offide = window.scrollY;
