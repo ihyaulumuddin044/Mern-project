@@ -1,8 +1,7 @@
 import React from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import {useForm} from "react-hook-form"
-
+import { useForm } from "react-hook-form";
 
 const Modal = () => {
   const {
@@ -12,16 +11,20 @@ const Modal = () => {
   } = useForm();
 
   const onSubmit = (data) => console.log(data);
-  
+
   return (
     <div>
       <dialog id="my_modal_5" className="modal modal-middle sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Login Please!</h3>
-          
+
           {/* email */}
           <div className="modal-action flex flex-col justify-center mt-0">
-            <form onSubmit={handleSubmit(onSubmit)} className="card-body" method="dialog">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="card-body"
+              method="dialog"
+            >
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -63,17 +66,24 @@ const Modal = () => {
                   Signup Now
                 </Link>
               </p>
+              <button
+                htmlFor="my_modal_5"
+                onClick={() => document.getElementById("my_modal_5").close()}
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              >
+                ✕
+              </button>
             </form>
-                {/* social login */}
+            {/* social login */}
             <div className="text-center space-x-3 mb-7">
               <button className="btn btn-circle hover:bg-green hover:text-white">
-                <FaGoogle/>
+                <FaGoogle />
               </button>
               <button className="btn btn-circle hover:bg-green hover:text-white">
-                <FaFacebookF/>
+                <FaFacebookF />
               </button>
               <button className="btn btn-circle hover:bg-green hover:text-white">
-                <FaGithub/>
+                <FaGithub />
               </button>
             </div>
           </div>
