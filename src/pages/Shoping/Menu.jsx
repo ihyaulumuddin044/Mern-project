@@ -173,7 +173,7 @@ const Menu = () => {
         {/* cards products */}
       </div>
       {/* pagination */}
-      <div className="flex justify-center py-8">
+      <div  className="flex justify-center py-8">
         {
           Array.from({length: Math.ceil(filtereditems.length / itemsPerPage)}).map((_, index) => (
             <button
