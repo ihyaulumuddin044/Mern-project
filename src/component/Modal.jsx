@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -11,17 +11,34 @@ const Modal = () => {
     formState: { errors },
   } = useForm();
 
-  const {sighUpWithGmail} = useContext(AuntContext)
+  const { sighUpWithGmail, login } = useContext(AuntContext);
 
-  const onSubmit = (data) => console.log(data);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onSubmit = (data) => {
+    const email = data.email;
+    const password = data.password;
+    // console.log(email, password);
+    login(email, password)
+      .then((result) => {
+        const user = result.user;
+        alert("login successfully!");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setErrorMessage("provide a correct email and password");
+      });
+  };
 
   // google login
   const hendleLogin = () => {
-    sighUpWithGmail().then((result) => {
-      const user = result.user;
-      alert("login successfully!")
-    }).catch((error) => console.log("login failed", error));
-  }
+    sighUpWithGmail()
+      .then((result) => {
+        const user = result.user;
+        alert("login successfully!");
+      })
+      .catch((error) => console.log("login failed", error));
+  };
 
   return (
     <div>
@@ -66,7 +83,9 @@ const Modal = () => {
                 </label>
               </div>
               {/* error */}
-
+                {
+                  errorMessage? <p className="text-red text-xl italic">{errorMessage}</p> : " "
+                }
               {/* login button */}
               <div className="form-control mt-6">
                 <input type="submit" value={"Login"} className="btn bg-green" />
@@ -87,7 +106,10 @@ const Modal = () => {
             </form>
             {/* social login */}
             <div className="text-center space-x-3 mb-7">
-              <button className="btn btn-circle hover:bg-green hover:text-white" onClick={hendleLogin}>
+              <button
+                className="btn btn-circle hover:bg-green hover:text-white"
+                onClick={hendleLogin}
+              >
                 <FaGoogle />
               </button>
               <button className="btn btn-circle hover:bg-green hover:text-white">
