@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuntContext } from "../context/AuntProvider";
 
 const Modal = () => {
   const {
@@ -10,7 +11,17 @@ const Modal = () => {
     formState: { errors },
   } = useForm();
 
+  const {sighUpWithGmail} = useContext(AuntContext)
+
   const onSubmit = (data) => console.log(data);
+
+  // google login
+  const hendleLogin = () => {
+    sighUpWithGmail().then((result) => {
+      const user = result.user;
+      alert("login successfully!")
+    }).catch((error) => console.log("login failed", error));
+  }
 
   return (
     <div>
@@ -76,7 +87,7 @@ const Modal = () => {
             </form>
             {/* social login */}
             <div className="text-center space-x-3 mb-7">
-              <button className="btn btn-circle hover:bg-green hover:text-white">
+              <button className="btn btn-circle hover:bg-green hover:text-white" onClick={hendleLogin}>
                 <FaGoogle />
               </button>
               <button className="btn btn-circle hover:bg-green hover:text-white">
