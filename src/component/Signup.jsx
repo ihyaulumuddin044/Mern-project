@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { AuntContext } from "../context/AuntProvider";
@@ -13,6 +13,9 @@ const Signup = () => {
   } = useForm();
 
   const { createUser, login } = useContext(AuntContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     const email = data.email;
@@ -21,8 +24,8 @@ const Signup = () => {
       // Signed up 
       const user = result.user;
       alert("Account creation successfully done!")
-      // document.getElementById("my_modal_5").close()
-      // navigate(from, {replace: true})
+      document.getElementById("my_modal_5").close()
+      navigate(from, {replace: true})
       // ...
     })
     .catch((error) => {

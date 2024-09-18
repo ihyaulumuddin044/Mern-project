@@ -3,6 +3,7 @@ import logo from "../../public/logo.png";
 import { FaRegUser } from "react-icons/fa";
 import Modal from "./Modal";
 import {AuntContext} from '../context/AuntProvider'
+import Profile from "./Profile";
 
 
 const Navbar = () => {
@@ -155,13 +156,15 @@ const Navbar = () => {
           {/* login button */}
 
           {/* button */}
-          <button
-            onClick={() => document.getElementById("my_modal_5").showModal()}
-            className="btn flex bg-green rounded-full text-white items-center gap-2 px-6 "
-          >
-            <FaRegUser />
-            Login
-          </button>
+         {
+          user? <Profile user={user} /> :  <button
+          onClick={() => document.getElementById("my_modal_5").showModal()}
+          className="btn flex bg-green rounded-full text-white items-center gap-2 px-6 "
+        >
+          <FaRegUser />
+          Login
+        </button>
+         }
           <Modal />
         </div>
       </div>
