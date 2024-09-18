@@ -77,6 +77,7 @@ const AuntProvider = ({ children }) => {
     login,
     logout,
     updateProfileUser,
+    loading,
   };
   return (
     <AuntContext.Provider value={authinfo}>{children}</AuntContext.Provider>
