@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuntContext } from "../context/AuntProvider";
 
@@ -12,8 +12,12 @@ const Modal = () => {
   } = useForm();
 
   const { sighUpWithGmail, login } = useContext(AuntContext);
-
   const [errorMessage, setErrorMessage] = useState("");
+  
+  // rediracting to home
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     const email = data.email;
@@ -23,10 +27,20 @@ const Modal = () => {
       .then((result) => {
         const user = result.user;
         alert("login successfully!");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
+        const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage("provide a correct email and password");
+
+        if (errorCode === 'auth/user-not-found') {
+          alert('Pengguna tidak ditemukan. Silakan mendaftar.');
+        } else if (errorCode === 'auth/wrong-password') {
+          alert('Password salah.');
+        } else {
+          alert(errorMessage); // Tampilkan pesan error lainnya
+        }
       });
   };
 
