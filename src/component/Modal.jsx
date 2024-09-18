@@ -35,13 +35,6 @@ const Modal = () => {
         const errorMessage = error.message;
         setErrorMessage("provide a correct email and password");
 
-        if (errorCode === 'auth/user-not-found') {
-          alert('Pengguna tidak ditemukan. Silakan mendaftar.');
-        } else if (errorCode === 'auth/wrong-password') {
-          alert('Password salah.');
-        } else {
-          alert(errorMessage); // Tampilkan pesan error lainnya
-        }
       });
   };
 
