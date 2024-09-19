@@ -42,13 +42,13 @@ const AuntProvider = ({ children }) => {
 
   // login using email and password
   const login = (email, password) => {
-    setLoading(true)
+    
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // laogout
   const logout = () => {
-    setLoading(true)
+
     return signOut(auth);
   };
 
@@ -61,19 +61,16 @@ const AuntProvider = ({ children }) => {
 
   // check sign-in user
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        setLoading(false)
-      } else {
-        // User is signed out
-        // ...
+      const unsubscribe = onAuthStateChanged(auth, currentUser =>{
+          // console.log(currentUser);
+          setUser(currentUser);
+          setLoading(false);
+      });
+
+      return () =>{
+          return unsubscribe();
       }
-    });
-    return () => {
-      return unsubscribe();
-    }
-  },[])
+  }, [])
   const authinfo = {
     user,
     createUser,

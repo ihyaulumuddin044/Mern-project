@@ -3,23 +3,23 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../component/Navbar";
 import "../App.css";
 import Footer from "../component/Footer";
-// import { AuntContext } from "../context/AuntProvider";
-// import LoadingSpiner from "../component/LoadingSpiner";
+import { AuntContext } from "../context/AuntProvider";
+import LoadingSpiner from "../component/LoadingSpiner";
 
 const Main = () => {
-  // const { loading } = useContext(AuntContext);
+  const { loading } = useContext(AuntContext);
+  console.log(loading);
   return (
     <div>
-      
-        <div>
-        <Navbar />
-        <div className="min-h-screen">
-          <Outlet />
-        </div>
-        <Footer />
-      </div> 
-      
-      
+      {loading ? ( <LoadingSpiner/> ) : (<div>
+       <Navbar />
+       <div className="min-h-screen">
+         <Outlet />
+       </div>
+       <Footer />
+     </div>  
+      )
+     }
     </div>
   );
 };
