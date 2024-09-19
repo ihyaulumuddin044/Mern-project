@@ -20,6 +20,7 @@ const AuntProvider = ({ children }) => {
 
   // create and accont
   const createUser = (email, password) => {
+    setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password);
     // .then((userCredential) => {
     //   // Signed up
@@ -35,16 +36,19 @@ const AuntProvider = ({ children }) => {
 
   // signup with Gmail
   const sighUpWithGmail = () => {
+    setLoading(true)
     return signInWithPopup(auth, googleProvider);
   };
 
   // login using email and password
   const login = (email, password) => {
+    setLoading(true)
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // laogout
   const logout = () => {
+    setLoading(true)
     return signOut(auth);
   };
 

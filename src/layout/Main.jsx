@@ -3,15 +3,14 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../component/Navbar";
 import "../App.css";
 import Footer from "../component/Footer";
-import { AuntContext } from "../context/AuntProvider";
-import LoadingSpiner from "../component/LoadingSpiner";
+// import { AuntContext } from "../context/AuntProvider";
+// import LoadingSpiner from "../component/LoadingSpiner";
 
 const Main = () => {
-  const { loading } = useContext(AuntContext);
+  // const { loading } = useContext(AuntContext);
   return (
     <div>
-      {
-        loading ? <LoadingSpiner /> :
+      
         <div>
         <Navbar />
         <div className="min-h-screen">
@@ -19,7 +18,7 @@ const Main = () => {
         </div>
         <Footer />
       </div> 
-      }
+      
       
     </div>
   );

@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuntContext } from "../context/AuntProvider";
 
 const Profile = ({ user }) => {
-  // console.log(user.photoURL);
+  // console.log(user.photoURL);\
+  const {logout} = useContext(AuntContext)
+  const hendleLogout = () => {
+    logout().then(() => {
+      alert("logout successfully")
+    }).catch((error) => {
+      alert(error)
+    });
+  }
   return (
     <div>
       <div className="drawer drawer-end z-40">
@@ -40,7 +49,7 @@ const Profile = ({ user }) => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <a onClick={hendleLogout} >Logout</a>
             </li>
           </ul>
         </div>
