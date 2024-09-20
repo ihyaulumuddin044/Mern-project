@@ -53,7 +53,7 @@ const AuntProvider = ({ children }) => {
   };
 
   // update profile
-  const updateProfileUser = ({name, photoURL}) => {
+  const updateProfileUser = (name, photoURL) => {
      return updateProfile(auth.currentUser, { 
       displayName: name, photoURL: photoURL
     });

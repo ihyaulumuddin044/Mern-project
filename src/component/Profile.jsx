@@ -25,7 +25,7 @@ const Profile = ({ user }) => {
                 src={user.photoURL}
               /> : <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
               />
               }
             </div>
