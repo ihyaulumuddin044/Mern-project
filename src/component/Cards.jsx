@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import {FaHeart} from 'react-icons/fa'
+import { AuntContext } from "../context/AuntProvider";
 const Cards = ({ item }) => {
+  const {name, image, price, recipe, _id } = item
     const[isHeartFilltered, setIsHeartFilled] = useState(false);
+    const {user} = useContext(AuntContext)
+    // console.log(user)
+    // handleAddToCart
+    const handleAddToCart = (item) => {
+        // console.log("added to cart", item);
+        if (user && user?.email) {
+            // add to cart
+            const cartItem = {menuItenId: _id, name, quantity: 1,image, price, email: user.email};
+            console.log(cartItem)
+        } else {
+          
+        }
+    }
 
     const handleHeartClick = () => {
         setIsHeartFilled(!isHeartFilltered);
@@ -29,7 +44,7 @@ const Cards = ({ item }) => {
           <h5 className="font-semibold">
             <span className="text-sm text-red">${""}</span> {item.price}
           </h5>
-          <button className="btn bg-green text-white">Buy Now</button>
+          <button className="btn bg-green text-white" onClick={() => handleAddToCart(item)}>Buy Now</button>
         </div>
       </div>
     </div>
