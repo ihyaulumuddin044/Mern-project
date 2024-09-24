@@ -14,7 +14,7 @@ const Menu = () => {
     // faetching data from backend
     const fetchData = async () => {
       try {
-        const response = await fetch("/Menu.json");
+        const response = await fetch("http://localhost:6001/menu");
         const data = await response.json();
         console.log(data);
         setMenu(data);
@@ -26,6 +26,9 @@ const Menu = () => {
     fetchData();
   }, []);
 
+  // factching data from backend
+ 
+
   // filtering data based on category
   const filteritems = (category) => {
     const filter =
@@ -35,14 +38,14 @@ const Menu = () => {
 
     setFiltereditems(filter);
     setSelectedCategory(category);
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
 
   // show all of the data
   const showAll = () => {
     setFiltereditems(menu);
     setSelectedCategory("all");
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
 
   // shorting by a-z, z-a low-high pricing, high-low pricing
@@ -70,7 +73,7 @@ const Menu = () => {
       // setFiltereditems(menu);
     }
     setFiltereditems(shortedItem);
-    selectedCategory(1)
+    selectedCategory(1);
   };
 
   // pagation logic
@@ -173,18 +176,20 @@ const Menu = () => {
         {/* cards products */}
       </div>
       {/* pagination */}
-      <div  className="flex justify-center py-8">
-        {
-          Array.from({length: Math.ceil(filtereditems.length / itemsPerPage)}).map((_, index) => (
-            <button
+      <div key={currentPage} className="flex justify-center py-8">
+        {Array.from({
+          length: Math.ceil(filtereditems.length / itemsPerPage),
+        }).map((_, index) => (
+          <button
             key={index + 1}
             onClick={() => paginate(index + 1)}
-            className={`mx-2 px-2 rounded-full ${currentPage === index + 1 ? "bg-green text-white":"bg-gray-200"}`}
-            >
-              {index + 1}
-            </button>
-          ))
-        }
+            className={`mx-2 px-2 rounded-full ${
+              currentPage === index + 1 ? "bg-green text-white" : "bg-gray-200"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
