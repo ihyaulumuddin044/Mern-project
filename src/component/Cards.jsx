@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { AuntContext } from "../context/AuntProvider";
 import Swal from "sweetalert2";
@@ -8,6 +8,9 @@ const Cards = ({ item }) => {
   const [isHeartFilltered, setIsHeartFilled] = useState(false);
   const { user } = useContext(AuntContext);
   // console.log(user)
+
+  const navigate = useNavigate();
+  const location = useLocation();
   // handleAddToCart
   const handleAddToCart = (item) => {
     // console.log("added to cart", item);
@@ -43,7 +46,28 @@ const Cards = ({ item }) => {
             });
           }
         });
-    } 
+    } else {
+      Swal.fire({
+        title: "pleace login!",
+        text: "pleace create an account to login!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "signup!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/signup", { state: { from: location }, replace: true });
+        }
+      });
+      // if (result.isConfirmed){
+      //   Swal.fire({
+      //     title: "deleted!",
+      //     text: "Your file has been deleted.",
+      //     icon: "success",
+      //   })
+      // }
+    }
   };
 
   const handleHeartClick = () => {
