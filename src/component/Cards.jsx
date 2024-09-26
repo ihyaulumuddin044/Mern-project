@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { AuntContext } from "../context/AuntProvider";
+import Swal from "sweetalert2";
 const Cards = ({ item }) => {
   const { name, image, price, recipe, _id } = item;
   const [isHeartFilltered, setIsHeartFilled] = useState(false);
@@ -24,14 +25,25 @@ const Cards = ({ item }) => {
       fetch("http://localhost:6001/cards", {
         method: "POST",
         headers: {
-          'content-type': 'application/json'
+          "content-type": "application/json",
         },
         body: JSON.stringify(cartItem),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
-    } else {
-    }
+        .then((data) => {
+          //  console.log(data)
+          if (data.insertedId) {
+            Swal.fire({
+              position: "center",
+              title: "Item added successfully!",
+              text: "You clicked the button!",
+              icon: "success",
+              showConfirmButton: true,
+              timer: 1500,
+            });
+          }
+        });
+    } 
   };
 
   const handleHeartClick = () => {
