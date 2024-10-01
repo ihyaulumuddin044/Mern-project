@@ -25,7 +25,7 @@ const Cards = ({ item }) => {
         email: user.email,
       };
       // console.log(cartItem)
-      fetch("http://localhost:6001/cards", {
+      fetch("your database or server", {
         method: "POST",
         headers: {
           "content-type": "application/json",

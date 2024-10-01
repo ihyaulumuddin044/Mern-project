@@ -14,7 +14,7 @@ const Menu = () => {
     // faetching data from backend
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:6001/menu");
+        const response = await fetch("your database");
         const data = await response.json();
         console.log(data);
         setMenu(data);
