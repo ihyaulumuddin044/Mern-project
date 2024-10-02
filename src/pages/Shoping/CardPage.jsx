@@ -1,6 +1,8 @@
 import React from "react";
+import useCart from "../../hooks/useCart";
 
 const CardPage = () => {
+  const [card, refetch] = useCart();
   return (
     <div className="section-container">
       {/* benner */}
@@ -32,16 +34,18 @@ const CardPage = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              <tr>
+              {
+                card.map((item, index) => (
+                  <tr key={item._id}>
                 <th>
-                  <td>1</td>
+                  <td>{index + 1}</td>
                 </th>
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="mask mask-squircle h-12 w-12">
                         <img
-                          src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                          src={item.image}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>
@@ -64,6 +68,8 @@ const CardPage = () => {
                   <button className="btn btn-ghost btn-xs">details</button>
                 </th>
               </tr>
+                ))
+              }
             </tbody>
             {/* foot */}
             {/* <tfoot>
