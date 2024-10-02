@@ -1,6 +1,6 @@
 import React from "react";
 import useCart from "../../hooks/useCart";
-
+import { FaTrash } from "react-icons/fa"
 const CardPage = () => {
   const [card, refetch] = useCart();
   return (
@@ -50,22 +50,20 @@ const CardPage = () => {
                         />
                       </div>
                     </div>
-                    <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
-                    </div>
                   </div>
                 </td>
-                <td>
-                  Zemlak, Daniel and Leannon
+                <td className="font-medium">
+                  {item.name}
                   <br />
                   <span className="badge badge-ghost badge-sm">
-                    Desktop Support Technician
                   </span>
                 </td>
-                <td>Purple</td>
+                <td>{item.quantity}</td>
+                <td>{item.price}</td>
                 <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
+                  <button className="btn btn-ghost btn-xs">
+                    <FaTrash />
+                  </button>
                 </th>
               </tr>
                 ))
