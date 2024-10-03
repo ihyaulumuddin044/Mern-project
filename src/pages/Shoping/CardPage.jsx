@@ -1,8 +1,7 @@
 import React from "react";
 import useCart from "../../hooks/useCart";
-import { FaTrash } from "react-icons/fa"
+import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-
 
 const CardPage = () => {
   const [card, refetch] = useCart();
@@ -15,14 +14,23 @@ const CardPage = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch()
+        fetch(`http://localhost:6001/cards/${item._id}`, { method: "DELETE" })
+          .then(res => res.json())
+          .then(data => {
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          });
       }
     });
-  }
-
+  };
 
   return (
     <div className="section-container">
@@ -44,7 +52,7 @@ const CardPage = () => {
           <table className="table">
             {/* head */}
             <thead className="bg-green rounded-full text-white">
-              <tr >
+              <tr>
                 <th>#</th>
                 <th>Food</th>
                 <th>Items Name</th>
@@ -55,40 +63,40 @@ const CardPage = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {
-                card.map((item, index) => (
-                  <tr key={item._id}>
-                <th>
-                  <td>{index + 1}</td>
-                </th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src={item.image}
-                          alt="Avatar Tailwind CSS Component"
-                        />
+              {card.map((item, index) => (
+                <tr key={item._id}>
+                  <th>
+                    <td>{index + 1}</td>
+                  </th>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img
+                            src={item.image}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td className="font-medium">
-                  {item.name}
-                  <br />
-                  <span className="badge badge-ghost badge-sm">
-                  </span>
-                </td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
-                <th>
-                  <button className="btn btn-ghost text-red btn-xs" onClick={() => handleDelete(item)}>
-                    <FaTrash />
-                  </button>
-                </th>
-              </tr>
-                ))
-              }
+                  </td>
+                  <td className="font-medium">
+                    {item.name}
+                    <br />
+                    <span className="badge badge-ghost badge-sm"></span>
+                  </td>
+                  <td>{item.quantity}</td>
+                  <td>{item.price}</td>
+                  <th>
+                    <button
+                      className="btn btn-ghost text-red btn-xs"
+                      onClick={() => handleDelete(item)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </th>
+                </tr>
+              ))}
             </tbody>
             {/* foot */}
             {/* <tfoot>
