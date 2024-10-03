@@ -8,6 +8,7 @@ const CardPage = () => {
   const [card, refetch] = useCart();
   const {user} = useContext(AuntContext)
 
+  // hendle delete item
   const handleDelete = (item) => {
     Swal.fire({
       title: "Are you sure?",
@@ -34,6 +35,12 @@ const CardPage = () => {
       }
     });
   };
+  
+  // handleDecrease function
+  const handleDecrease = (item) => {
+    console.log(item)
+    
+  }
 
   return (
     <div className="section-container">
@@ -86,9 +93,13 @@ const CardPage = () => {
                   <td className="font-medium">
                     {item.name}
                     <br />
-                    <span className="badge badge-ghost badge-sm"></span>
+                    {/* <span className="badge badge-ghost badge-sm"></span> */}
                   </td>
-                  <td>{item.quantity}</td>
+                  <div className=" my-10">
+                  <button className="btn btn-xs bg-green" onClick={() => handleDecrease(item) }>-</button>
+                  <input type="number" value={item.quantity} className="w-10 mx-2 text-center overflow-hidden appearance-none" />
+                  <button className="btn btn-xs bg-green">+</button>
+                  </div>
                   <td>{item.price}</td>
                   <th>
                     <button
