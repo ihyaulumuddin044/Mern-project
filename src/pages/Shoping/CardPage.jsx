@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import useCart from "../../hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { AuntContext } from "../../context/AuntProvider";
 
 const CardPage = () => {
   const [card, refetch] = useCart();
+  const {user} = useContext(AuntContext)
 
   const handleDelete = (item) => {
     Swal.fire({
@@ -21,6 +23,7 @@ const CardPage = () => {
           .then(res => res.json())
           .then(data => {
             if (data.deletedCount > 0) {
+              refetch();
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
@@ -109,6 +112,21 @@ const CardPage = () => {
               </tr>
             </tfoot> */}
           </table>
+        </div>
+      </div>
+      {/* customer details */}
+      <div className="my-12 flex md:flex-row flex-col justify-between">
+        <div className="md:w-1/2 space-y-3">
+        <h3>Customer Details :</h3>
+        <p>Name: {user.displayName}</p>
+        <p>Emai: {user.email}</p>
+        <p>User Id: {user.uid}</p>
+        </div>
+        <div className="md:w-1/2 space-y-3">
+        <h3>Order Details :</h3>
+        <p >Total Items: <span className="text-red">{card.length}</span> </p>
+        <p>Total Price: $00.00</p>
+        <button className="btn bg-green text-white ">Procceed checkout</button>
         </div>
       </div>
     </div>

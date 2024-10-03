@@ -2,14 +2,14 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="section-container">
-      <footer className="footer xl:px-24 py-10 px-4 text-base-content">
+    <div className="section-container ">
+      <footer className="footer xl:px-24 py-10 px-4 text-base-content ">
         <aside>
           <img src="/public/logo.png" alt="" />
           <p>Savor the artistry where every dish is a culinary masterpiece</p>
         </aside>
         <nav>
-          <header className="footer-title text-black">Useful links</header>
+          <header className="footer-title text-black ">Useful links</header>
           <a className="link link-hover">About us</a>
           <a className="link link-hover">Events</a>
           <a className="link link-hover">Blogs</a>
