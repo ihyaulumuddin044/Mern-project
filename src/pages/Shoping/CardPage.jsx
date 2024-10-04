@@ -37,9 +37,45 @@ const CardPage = () => {
     });
   };
 
+  // calculate total price
+  const calculatePrice = (item) => {
+    return item.price * item.quantity;
+  };
+
+  // hendle calculate total price all items
+const  calculatePriceAll = card.reduce((total, item) => {
+  return total + calculatePrice(item);
+}, 0)
+
+const orderTotal = calculatePriceAll
   // handleDecrease function
   const handleDecrease = (item) => {
-    console.log(item._id);
+    // console.log(item._id);
+    if (item.quantity > 1) {
+      fetch(`http://localhost:6001/cards/${item._id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify({ quantity: item.quantity - 1 }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const updatedCard = cardItems.map((cardItems) => {
+            if (cardItems._id === item._id) {
+              return {
+                ...cardItems,
+                quantity: cardItems.quantity - 1,
+              };
+            }
+            return cardItems;
+          });
+          refetch();
+          setCardItems(updatedCard);
+        });
+    }else{
+      alert("items can`t be less than 1")
+    }
   };
 
   // handleIncrease function
@@ -56,13 +92,13 @@ const CardPage = () => {
       .then((data) => {
         const updatedCard = cardItems.map((cardItems) => {
           if (cardItems._id === item._id) {
-            return{
+            return {
               ...cardItems,
-              quantity: cardItems.quantity + 1
-            }
+              quantity: cardItems.quantity + 1,
+            };
           }
           return cardItems;
-        })
+        });
         refetch();
         setCardItems(updatedCard);
       });
@@ -123,7 +159,7 @@ const CardPage = () => {
                   </td>
                   <div className=" my-10">
                     <button
-                      className="btn btn-xs bg-green"
+                      className="btn btn-xs bg-green text-white"
                       onClick={() => handleDecrease(item)}
                     >
                       -
@@ -134,9 +170,14 @@ const CardPage = () => {
                       onChange={() => console.log(item.quantity)}
                       className="w-10 mx-2 text-center overflow-hidden appearance-none"
                     />
-                    <button className="btn btn-xs bg-green" onClick={() => handleIncrease(item)}>+</button>
+                    <button
+                      className="btn btn-xs bg-green text-white"
+                      onClick={() => handleIncrease(item)}
+                    >
+                      +
+                    </button>
                   </div>
-                  <td>{item.price}</td>
+                  <td>${calculatePrice(item).toFixed(2)}</td>
                   <th>
                     <button
                       className="btn btn-ghost text-red btn-xs"
@@ -174,7 +215,7 @@ const CardPage = () => {
           <p>
             Total Items: <span className="text-red">{card.length}</span>{" "}
           </p>
-          <p>Total Price: $00.00</p>
+          <p>Total Price: ${orderTotal.toFixed(2)}</p>
           <button className="btn bg-green text-white ">
             Procceed checkout
           </button>
