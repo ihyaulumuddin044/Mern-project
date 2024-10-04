@@ -6,8 +6,9 @@ import Signup from "../component/Signup";
 import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import CardPage from "../pages/Shoping/CardPage";
 import DahsboardLayout from "../layout/DahsboardLayout";
-// import PrivateRouter from "../PrivateRouters";
-
+import PrivateRouter from "../PrivateRouters/PrivateRouter";
+import Dashboard from "../pages/dashboard/admin/dashboard";
+import Users from "../pages/dashboard/admin/Users";
 
 const router = createBrowserRouter([
   {
@@ -20,17 +21,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/menu",
-        element:<Menu />,
+        element: <Menu />,
       },
       {
         path: "/card-page",
-        element:<CardPage />,
+        element: <CardPage />,
       },
       {
         path: "/update-profile",
-        element:<UpdateProfile />,
+        element: <UpdateProfile />,
       },
-
     ],
   },
   {
@@ -39,8 +39,24 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DahsboardLayout />,
+    element: (
+      <PrivateRouter>
+        <DahsboardLayout />
+      </PrivateRouter>
+    ),
+    children: [
+      {
+        // Menggunakan relative path
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "",
+        element: <Dashboard />,
+      },
+    ],
   },
 ]);
+
 
 export default router;
