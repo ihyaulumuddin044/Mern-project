@@ -3,14 +3,46 @@ import { Link, Outlet } from "react-router-dom";
 import { MdDashboard, MdDashboardCustomize } from "react-icons/md";
 import {
   FaEdit,
+  FaLocationArrow,
   FaPlus,
   FaPlusCircle,
+  FaQuestionCircle,
   FaRegUser,
   FaShoppingBag,
   FaUser,
 } from "react-icons/fa";
 
 import Logo from "../../public/logo.png";
+import { FaCartShopping } from "react-icons/fa6";
+
+const sharedLinks = (
+  <>
+    <li className="mt-3">
+      <Link to="/">
+        <MdDashboard />
+        Home
+      </Link>
+    </li>
+    <li>
+      <Link to="/menus">
+        <FaCartShopping />
+        menus
+      </Link>
+    </li>
+    <li>
+      <Link to="/menus">
+        <FaLocationArrow />
+        Order Tracing
+      </Link>
+    </li>
+    <li>
+      <Link to="/menus">
+        <FaQuestionCircle />
+        Customers Support
+      </Link>
+    </li>
+  </>
+);
 const DahsboardLayout = () => {
   return (
     <div>
@@ -26,11 +58,12 @@ const DahsboardLayout = () => {
               <MdDashboardCustomize />
             </label>
             <button className="btn rounded-full px px-6 bg-green text-white sm:hidden">
-              <FaRegUser />Logout
+              <FaRegUser />
+              Logout
             </button>
           </div>
           <div className="mt-5 md:mt-2 mx-4">
-          <Outlet />
+            <Outlet />
           </div>
         </div>
         <div className="drawer-side">
@@ -71,12 +104,14 @@ const DahsboardLayout = () => {
                 Manage item
               </Link>
             </li>
-            <li>
+            <li className="mb-4">
               <Link to="/dashboard/users">
                 <FaUser />
                 All Users
               </Link>
             </li>
+            {/* shared nav links */}
+            {sharedLinks}
           </ul>
         </div>
       </div>
