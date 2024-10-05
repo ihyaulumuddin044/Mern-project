@@ -1,19 +1,37 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { MdDashboard, MdDashboardCustomize } from "react-icons/md";
+import {
+  FaEdit,
+  FaPlus,
+  FaPlusCircle,
+  FaRegUser,
+  FaShoppingBag,
+  FaUser,
+} from "react-icons/fa";
 
+import Logo from "../../public/logo.png";
 const DahsboardLayout = () => {
   return (
     <div>
-      <div className="drawer lg:drawer-open">
+      <div className="drawer sm:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content flex flex-col sm:items-center sm:justify-center">
           {/* Page content here */}
-          <label
-            htmlFor="my-drawer-2"
-            className="btn btn-primary drawer-button lg:hidden"
-          >
-            Open drawer
-          </label>
+          <div className="flex justify-between items-center mx-4">
+            <label
+              htmlFor="my-drawer-2"
+              className="btn btn-primary drawer-button lg:hidden"
+            >
+              <MdDashboardCustomize />
+            </label>
+            <button className="btn rounded-full px px-6 bg-green text-white sm:hidden">
+              <FaRegUser />Logout
+            </button>
+          </div>
+          <div className="mt-5 md:mt-2 mx-4">
+          <Outlet />
+          </div>
         </div>
         <div className="drawer-side">
           <label
@@ -24,10 +42,40 @@ const DahsboardLayout = () => {
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             {/* Sidebar content here */}
             <li>
-              <a>Dashboard</a>
+              <Link to="/dashboard" className="flex justify-start">
+                <img src={Logo} className="w-30" />
+                <span className="badge badge-primary">admin</span>
+              </Link>
             </li>
             <li>
-              <a>All Users</a>
+              <Link to="/dashboard">
+                <MdDashboard />
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard">
+                <FaShoppingBag />
+                Manege Booking
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard">
+                <FaPlusCircle />
+                Add Menu
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard">
+                <FaEdit />
+                Manage item
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard/users">
+                <FaUser />
+                All Users
+              </Link>
             </li>
           </ul>
         </div>
