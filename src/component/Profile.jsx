@@ -49,6 +49,9 @@ const Profile = ({ user }) => {
               <a>Settings</a>
             </li>
             <li>
+              <a href="/dashboard">dasboard</a>
+            </li>
+            <li>
               <a onClick={hendleLogout} >Logout</a>
             </li>
           </ul>
