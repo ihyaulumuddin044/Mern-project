@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AuntContext } from "../context/AuntProvider";
+import { Link } from "react-router-dom";
 
 const Profile = ({ user }) => {
   // console.log(user.photoURL);\
@@ -49,7 +50,7 @@ const Profile = ({ user }) => {
               <a>Settings</a>
             </li>
             <li>
-              <a href="/dashboard">dasboard</a>
+              <Link href="/dashboard">dasboard</Link>
             </li>
             <li>
               <a onClick={hendleLogout} >Logout</a>
