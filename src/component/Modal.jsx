@@ -13,7 +13,7 @@ const Modal = () => {
 
   const { sighUpWithGmail, login } = useContext(AuntContext);
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   // rediracting to home
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ const Modal = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage("provide a correct email and password");
-
       });
   };
 
@@ -91,9 +90,11 @@ const Modal = () => {
                 </label>
               </div>
               {/* error */}
-                {
-                  errorMessage? <p className="text-red text-xl italic">{errorMessage}</p> : " "
-                }
+              {errorMessage ? (
+                <p className="text-red text-xl italic">{errorMessage}</p>
+              ) : (
+                " "
+              )}
               {/* login button */}
               <div className="form-control mt-6">
                 <input type="submit" value={"Login"} className="btn bg-green" />

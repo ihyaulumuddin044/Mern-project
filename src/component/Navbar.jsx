@@ -6,15 +6,17 @@ import {AuntContext} from '../context/AuntProvider'
 import Profile from "./Profile";
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
+import useAuth from "../hooks/useAuth";
 
 
 const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
-
-  const {user} = useContext(AuntContext)
-  console.log(user)
+  const {user, loading} = useAuth();
   const [card, refetch] = useCart();
-  console.log(card)
+
+  // const {user} = useContext(AuntContext)
+  // console.log(user)
+  // console.log(card)
 
 
   useEffect(() => {

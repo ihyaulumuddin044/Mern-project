@@ -9,6 +9,7 @@ import DahsboardLayout from "../layout/DahsboardLayout";
 import PrivateRouter from "../PrivateRouters/PrivateRouter";
 import Dashboard from "../pages/dashboard/admin/dashboard";
 import Users from "../pages/dashboard/admin/Users";
+import Login from "../component/Login";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/login",
+    element: <Login/>
   },
   {
     path: "/dashboard",

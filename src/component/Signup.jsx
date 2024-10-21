@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { AuntContext } from "../context/AuntProvider";
 import axios from "axios";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Signup = () => {
   const {
@@ -14,6 +15,7 @@ const Signup = () => {
   } = useForm();
 
   const { createUser, sighUpWithGmail, updateProfileUser } = useContext(AuntContext);
+  const axiosPublic = useAxiosPublic()
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
