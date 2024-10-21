@@ -46,7 +46,6 @@ const Signup = () => {
       // ..
     })
   }
-  
   // login with Gmail
   const handleRegister = () => {
     sighUpWithGmail()

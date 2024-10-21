@@ -4,31 +4,35 @@ import { Link } from "react-router-dom";
 
 const Profile = ({ user }) => {
   // console.log(user.photoURL);\
-  const {logout} = useContext(AuntContext)
+  const { logout } = useContext(AuntContext);
   const hendleLogout = () => {
-    logout().then(() => {
-      alert("logout successfully")
-    }).catch((error) => {
-      alert(error)
-    });
-  }
+    logout()
+      .then(() => {
+        alert("logout successfully");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
   return (
     <div>
       <div className="drawer drawer-end z-40">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Page content here */}
-          <label htmlFor="my-drawer-4" className="drawer-button btn btn-ghost btn-circle avatar">
+          <label
+            htmlFor="my-drawer-4"
+            className="drawer-button btn btn-ghost btn-circle avatar"
+          >
             <div className="w-10 rounded-full z-0">
-              {
-                user.photoURL ? <img
-                alt="Tailwind CSS Navbar component"
-                src={user.photoURL}
-              /> : <img
-                alt="Tailwind CSS Navbar component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
-              }
+              {user.photoURL ? (
+                <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+              ) : (
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                />
+              )}
             </div>
           </label>
         </div>
@@ -50,10 +54,10 @@ const Profile = ({ user }) => {
               <a>Settings</a>
             </li>
             <li>
-              <Link href="/dashboard">dasboard</Link>
+              <Link to="/dashboard">dasboard</Link>
             </li>
             <li>
-              <a onClick={hendleLogout} >Logout</a>
+              <a onClick={hendleLogout}>Logout</a>
             </li>
           </ul>
         </div>

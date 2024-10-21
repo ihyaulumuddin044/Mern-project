@@ -20,6 +20,7 @@ const Users = () => {
       return res.json();
     },
   });
+  const admin = false;
   console.log(users);
   return (
     <div>
