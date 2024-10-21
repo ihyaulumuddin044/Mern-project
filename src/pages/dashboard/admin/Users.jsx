@@ -1,26 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { FaTrashAlt, FaUser, FaUsers } from "react-icons/fa"
+import { FaTrashAlt, FaUser, FaUsers } from "react-icons/fa";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 // import User from '../../../../../Foodis-server/api/models/User'
 // import axios from 'axios'
 
 const Users = () => {
-  // const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const { refact, data: users = [] } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:6001/user`);
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log();
-      // const data = await res.json();
-      // console.log('Data fetched from API:', data); // Tambahkan ini untuk memeriksa respons
-      // return data;
-      return res.json();
+      const res = await axiosSecure.get("/user");
+      return res.data;
     },
   });
-  const admin = false;
+
+  // const admin = false;
+
+  // hendle admin
+  const handelMakeAdmin = (user) => {
+    axiosSecure.patch(`/user/admin/${user._id}`).then((res) => {
+      alert(`${user.name} is admin now`);
+    });
+    refetch();
+  };
+
+  // hendle delete user from admnin
+  const handleDeleteUser = user => {
+    axiosSecure.delete(`/user/${user._id}`).then(res => {
+      alert(`${user.name} is removed from database`);
+      refetch();
+    })
+  }
+
   console.log(users);
   return (
     <div>
@@ -49,13 +61,22 @@ const Users = () => {
                   <th>{index + 1}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>{
-                    user.role === "admin" ? "admin" : (
-                      <button className="btn btn-circle btn-xs bg-orange-500 text-white"><FaUsers /></button>
-                    )
-                    }</td>
                   <td>
-                    <button className="btn btn-ghost btn-xs bg-red"><FaTrashAlt className="text-white"/> </button>
+                    {user.role === "admin" ? (
+                      "admin"
+                    ) : (
+                      <button
+                        onClick={() => handelMakeAdmin(user)}
+                        className="btn btn-circle btn-xs bg-orange-500 text-white"
+                      >
+                        <FaUsers />
+                      </button>
+                    )}
+                  </td>
+                  <td>
+                    <button onClick={() => handleDeleteUser(user)} className="btn btn-ghost btn-xs bg-red">
+                      <FaTrashAlt className="text-white" />{" "}
+                    </button>
                   </td>
                 </tr>
               ))}

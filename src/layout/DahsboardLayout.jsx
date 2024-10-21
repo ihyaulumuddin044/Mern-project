@@ -16,6 +16,8 @@ import Logo from "../../public/logo.png";
 import { FaCartShopping } from "react-icons/fa6";
 import Modal from "../component/Modal";
 import Signup from "../component/Signup";
+import useAdmin from "../hooks/useAdmin";
+import useAuth from "../hooks/useAuth";
 
 const sharedLinks = (
   <>
@@ -46,7 +48,8 @@ const sharedLinks = (
   </>
 );
 const DahsboardLayout = () => {
-  const isAdmin = true;
+  const {loading} = useAuth();
+  const [isAdmin, isAdminLoading] = useAdmin();
   return (
     <div>
 
@@ -121,7 +124,7 @@ const DahsboardLayout = () => {
               </ul>
             </div>
           </div>
-        </div>) : (<Signup/>)
+        </div>) : (loading ? <Login/> : <div className="h-screen flex justify-center items-center"><Link to="/"><button className="btn bg-green text-white">Back to Home</button></Link></div>)
     }
     </div>
   );
