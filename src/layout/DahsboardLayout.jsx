@@ -57,9 +57,9 @@ const DahsboardLayout = () => {
         isAdmin ? (<div>
           <div className="drawer sm:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col sm:items-center sm:justify-center">
+            <div className="drawer-content flex flex-col sm:justify-start sm:items-start my-2">
               {/* Page content here */}
-              <div className="flex justify-between items-center mx-4">
+              <div className="flex justify-between items-center mx-4 ">
                 <label
                   htmlFor="my-drawer-2"
                   className="btn btn-primary drawer-button lg:hidden"
@@ -102,7 +102,7 @@ const DahsboardLayout = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/dashboard">
+                  <Link to="/dashboard/add-menu">
                     <FaPlusCircle />
                     Add Menu
                   </Link>

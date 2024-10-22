@@ -6,10 +6,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAuth from "../hooks/useAuth";
+import { AuntContext } from "../context/AuntProvider";
+
 
 const Login = () => {
   const [errorMessage, seterrorMessage] = useState("");
-  const { signUpWithGmail, login } = useAuth();
+  const { sighUpWithGmail, login } = useAuth();
   const axiosPublic = useAxiosPublic();
 
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ const Login = () => {
   // login with google
   // login with google
   const handleRegister = () => {
-    signUpWithGmail()
+    sighUpWithGmail()
       .then((result) => {
         const user = result.user;
         const userInfor = {
@@ -64,7 +66,7 @@ const Login = () => {
           email: result?.user?.email,
         };
         axiosPublic
-          .post("/users", userInfor)
+          .post("/user", userInfor)
           .then((response) => {
             // console.log(response);
             alert("Signin successful!");
