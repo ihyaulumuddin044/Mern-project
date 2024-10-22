@@ -36,13 +36,13 @@ const Users = () => {
   console.log(users);
   return (
     <div>
-      <div className="flex justify-between items-center m-4">
+      <div className="flex justify-between items-center  m-4">
         <h5>all users</h5>
         <h5>total user: {users.length}</h5>
       </div>
       {/* table */}
       <div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto ">
           <table className="table table-zebra md:w-[870px]">
             {/* head */}
             <thead className="bg-green font-bold text-white">
