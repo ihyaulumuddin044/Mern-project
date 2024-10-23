@@ -145,7 +145,7 @@ const Cards = ({ item }) => {
       </Link>
       <div className="card-body">
         <h2 className="card-title">{item.name}</h2>
-        <p>descpription of the foods</p>
+        <p>{item.recipe}</p>
         {/* <p>{item.recipe}</p> */}
         <div className="card-actions justify-between items-center mt-2">
           <h5 className="font-semibold">

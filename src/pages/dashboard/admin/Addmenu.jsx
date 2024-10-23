@@ -21,28 +21,25 @@ const Addmenu = () => {
     const imageFile = { image: data.image[0] };
     const hostingImg = await axiosPublic.post(image_upload, imageFile, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "content-type": "multipart/form-data",
       },
     });
-    // console.log(hostingImg);
+    console.log(hostingImg);
     if (hostingImg.data.success) {
       const menuItem = {
         name: data.name,
         category: data.category,
-        price: parseFloat(data.price),
+        price: parseFloat(data.price), 
         recipe: data.recipe,
-        image: hostingImg.data.data.display_url,
-      }
+        image: hostingImg.data.data.display_url
+      };
 
-      // console.log(menuItem); // send menu item to backend
-
-      // post menu items
-      const PostMenuItems = axiosSecure.post('/menu', menuItem);
-      if (PostMenuItems) {
-        // console.log(PostMenuItems.status === 200); 
+      // console.log(menuItem);
+      const postMenuItem = axiosSecure.post('/menu', menuItem);
+      if(postMenuItem){
         reset()
         Swal.fire({
-          position: "top-center",
+          position: "top-end",
           icon: "success",
           title: "Your Item is inserted successfully!",
           showConfirmButton: false,
@@ -50,6 +47,32 @@ const Addmenu = () => {
         });
       }
     }
+    
+    // if (hostingImg.data.success) {
+    //   const menuItem = {
+    //     name: data.name,
+    //     category: data.category,
+    //     price: parseFloat(data.price),
+    //     recipe: data.recipe,
+    //     image: hostingImg.data.data.display_url,
+    //   }
+
+    //   console.log(menuItem); // send menu item to backend
+
+    //   // post menu items
+    //   const PostMenuItems =  await axiosSecure.post('/menu', menuItem);
+    //   if (PostMenuItems) {
+    //     // console.log(PostMenuItems.status === 200); 
+    //     reset()
+    //     Swal.fire({
+    //       position: "center",
+    //       icon: "success",
+    //       title: "Your Item is inserted successfully!",
+    //       showConfirmButton: false,
+    //       timer: 1000
+    //     });
+    //   }
+    // }
   }
 
   return (
