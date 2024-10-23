@@ -1,10 +1,56 @@
 import React from "react";
 import { FaUtensils } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from 'sweetalert2'
 
 const Addmenu = () => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const { register, handleSubmit, reset } = useForm();
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  // const 
+
+  // image hosting key
+  const image_hosting_key = import.meta.env.VITE_hosting_image_API;
+  // console.log(image_hosting_key);
+
+  const image_upload = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+  const onSubmit =  async (data) => {
+    const imageFile = { image: data.image[0] };
+    const hostingImg = await axiosPublic.post(image_upload, imageFile, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // console.log(hostingImg);
+    if (hostingImg.data.success) {
+      const menuItem = {
+        name: data.name,
+        category: data.category,
+        price: parseFloat(data.price),
+        recipe: data.recipe,
+        image: hostingImg.data.data.display_url,
+      }
+
+      // console.log(menuItem); // send menu item to backend
+
+      // post menu items
+      const PostMenuItems = axiosSecure.post('/menu', menuItem);
+      if (PostMenuItems) {
+        // console.log(PostMenuItems.status === 200); 
+        reset()
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Your Item is inserted successfully!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    }
+  }
 
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
