@@ -108,7 +108,7 @@ const DahsboardLayout = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/dashboard">
+                  <Link to="/dashboard/manage-items">
                     <FaEdit />
                     Manage item
                   </Link>

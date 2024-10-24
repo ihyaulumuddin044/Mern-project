@@ -39,7 +39,7 @@ const Addmenu = () => {
       if(postMenuItem){
         reset()
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Your Item is inserted successfully!",
           showConfirmButton: false,
