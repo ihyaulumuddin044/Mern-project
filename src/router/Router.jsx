@@ -13,6 +13,7 @@ import Login from "../component/Login";
 import Addmenu from "../pages/dashboard/admin/Addmenu";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
+import Payment from "../pages/Shoping/Payment";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/card-page",
         element: <CardPage />,
+      },
+      {
+        path: "process-payment",
+        element: <Payment />,
       },
       {
         path: "/update-profile",

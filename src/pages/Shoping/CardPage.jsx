@@ -3,6 +3,8 @@ import useCart from "../../hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuntContext } from "../../context/AuntProvider";
+import { Link } from "react-router-dom"
+
 
 const CardPage = () => {
   const [card, refetch] = useCart();
@@ -216,9 +218,12 @@ const orderTotal = calculatePriceAll
             Total Items: <span className="text-red">{card.length}</span>{" "}
           </p>
           <p>Total Price: ${orderTotal.toFixed(2)}</p>
-          <button className="btn bg-green text-white ">
-            Procceed checkout
+          <Link to = "/process-payment" >
+          <button className="btn bg-green text-white">
+          Procceed checkout
+
           </button>
+          </Link>
         </div>
       </div>
     </div>
