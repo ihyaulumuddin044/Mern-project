@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from 'sweetalert2'
 import { useForm } from "react-hook-form";
 import { FaUtensils } from "react-icons/fa";
+import "/src/App.css";
 
 const UpdateMenu = () => {
   const item = useLoaderData();
@@ -13,7 +14,9 @@ const UpdateMenu = () => {
   const { register, handleSubmit, reset } = useForm();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
-  // const 
+
+  // loading hendler
+  const [isloading, setIsLoading] = useState(false);
 
   // image hosting key
   const image_hosting_key = import.meta.env.VITE_hosting_image_API;
@@ -22,38 +25,75 @@ const UpdateMenu = () => {
   const image_upload = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
   const onSubmit =  async (data) => {
-    const imageFile = { image: data.image[0] };
-    const hostingImg = await axiosPublic.post(image_upload, imageFile, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    console.log(hostingImg);
-    if (hostingImg.data.success) {
-      const menuItem = {
-        name: data.name,
-        category: data.category,
-        price: parseFloat(data.price), 
-        recipe: data.recipe,
-        image: hostingImg.data.data.display_url
-      };
+    setIsLoading(true); // Set loading saat mulai proses
+    try {
+      const imageFile = { image: data.image[0] };
+      const hostingImg = await axiosPublic.post(image_upload, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
 
-      // console.log(menuItem);
-      const postMenuItem = axiosSecure.post('/menu', menuItem);
-      if(postMenuItem){
-        reset()
+      if (hostingImg.data.success) {
+        const menuItem = {
+          name: data.name,
+          category: data.category,
+          price: parseFloat(data.price),
+          recipe: data.recipe,
+          image: hostingImg.data.data.display_url,
+        };
+
+        // Proses update menu di server
+        await axiosSecure.patch(`/menu/${item._id}`, menuItem);
+        
+        reset(); // Reset form setelah sukses
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Your Item is inserted successfully!",
+          title: "Your Item is updated successfully!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 2000,
         });
+        navigate("/dashboard/manage-items");
       }
+    } catch (error) {
+      console.error("Update failed:", error);
+    } finally {
+      setIsLoading(false); // Kembali ke false setelah selesai
     }
+  };
+    // const imageFile = { image: data.image[0] };
+    // const hostingImg = await axiosPublic.post(image_upload, imageFile, {
+    //   headers: {
+    //     "content-type": "multipart/form-data",
+    //   },
+    // });
+    // console.log(hostingImg);
+    // if (hostingImg.data.success) {
+    //   const menuItem = {
+    //     name: data.name,
+    //     category: data.category,
+    //     price: parseFloat(data.price), 
+    //     recipe: data.recipe,
+    //     image: hostingImg.data.data.display_url
+    //   };
+
+    //   // console.log(menuItem);
+    //   const postMenuItem = await axiosSecure.patch(`/menu/${item._id}`, menuItem);
+    //   if(postMenuItem){
+    //     reset()
+    //     Swal.fire({
+    //       position: "center",
+    //       icon: "success",
+    //       title: "Your Item is updated successfully!",
+    //       showConfirmButton: false,
+    //       timer: 1500
+    //     });
+    //   }
+    // }
     
     
-  }
+  // }
 
   console.log(item);
 
@@ -141,8 +181,10 @@ const UpdateMenu = () => {
             />
           </div>
 
-          <button className="btn bg-green text-white px-6">
-            Add Item <FaUtensils />
+          <button className="btn bg-green text-white px-6" disabled={isloading}>
+            {isloading ? (
+              <div className="spinner border-4 border-t-transparent border-white rounded-full w-5 h-5 mr-2"></div>
+            ) : "Update"}<FaUtensils />
           </button>
         </form>
       </div>
