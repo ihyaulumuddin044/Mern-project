@@ -12,7 +12,7 @@ const Payment = () => {
   console.log(cart);
 
   // calculate total price
-  const cartTotal = cart.reduce((sum, items) => sum + items.price, 0);
+  const cartTotal = cart.reduce((sum, items) => sum + items.price * items.quantity, 0);
   // console.log(cartTotal);
   const totalPrice = parseFloat(cartTotal.toFixed(2));
   console.log(totalPrice);
