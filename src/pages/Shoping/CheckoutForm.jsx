@@ -1,8 +1,14 @@
 import React from 'react'
 
-const CheckoutForm = () => {
+const CheckoutForm = ({price, cart}) => {
   return (
-    <div>CheckoutForm</div>
+    <div className='flex flex-col sm:flex-row justify-start items-start gap-8'>
+      {/* left content */}
+      <div>left side</div>
+
+      {/* right content */}
+      <div>right side</div>
+    </div>
   )
 }
 
