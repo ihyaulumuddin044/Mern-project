@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FaPaypal } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  const [cardError, setCardError] = useState('');
+  const [cardError, setCardError] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    if (typeof price !== "number" || price <= 1) {
+      console.log("price is not valid");
+      return;
+    }
+    axiosSecure.post("/create-payment-intent", { price }).then((res) => {
+      // console.log(res.data.clientSecret);
+      setClientSecret(res.data.clientSecret);
+    });
+  }, [price, axiosSecure]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements) {
       return;
     }
+    // criate card element
     const card = elements.getElement(CardElement);
     if (card === null) {
       return;
@@ -25,8 +42,25 @@ const CheckoutForm = ({ price, cart }) => {
       console.log(error);
       setCardError(error.message);
     } else {
-      console.log(paymentMethod);
+      // console.log(paymentMethod);
       setCardError("payment success");
+    }
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: user?.displayName || "anonimous",
+            email: user?.email || "unknown",
+          },
+        },
+      });
+    if (confirmError) {
+      console.log(confirmError);
+    }
+    console.log(paymentIntent);
+    if (paymentIntent.status === "succeeded") {
+      console.log(paymentIntent.id);
     }
     // console.log("payment success");
   };
@@ -69,7 +103,11 @@ const CheckoutForm = ({ price, cart }) => {
             Pay
           </button>
         </form>
-        {cardError ? <p className="text-red italic text-bold">{cardError} </p> : ""}
+        {cardError ? (
+          <p className="text-red italic text-bold">{cardError} </p>
+        ) : (
+          ""
+        )}
 
         {/* paypal */}
 
