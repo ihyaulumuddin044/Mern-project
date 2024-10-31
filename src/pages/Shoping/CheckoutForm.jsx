@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FaPaypal } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import { trace } from "../../../../Foodis-server/api/routes/menuRouters";
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
@@ -61,6 +62,20 @@ const CheckoutForm = ({ price, cart }) => {
     console.log(paymentIntent);
     if (paymentIntent.status === "succeeded") {
       console.log(paymentIntent.id);
+      setCardError(` your transactionid is: ${paymentIntent.id}`);
+
+      // paymen info data
+      const paymentInfo = {
+        email: user.email,
+        transactionId: paymentIntent.id,
+        price,
+        quantity: cart.length,
+        status: "Order",
+        itemName: cart.map((item) => item.name),
+        cartItem: cart.map((item) => item._id),
+        menuItem: cart.map((item) => item.menuItemId),
+      };
+      console.log(paymentInfo);
     }
     // console.log("payment success");
   };
