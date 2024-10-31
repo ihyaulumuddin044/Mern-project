@@ -76,6 +76,12 @@ const CheckoutForm = ({ price, cart }) => {
         menuItem: cart.map((item) => item.menuItemId),
       };
       console.log(paymentInfo);
+
+      // send payment info to the server
+      axiosSecure.post("/payments", paymentInfo).then((res) => {
+        console.log(res.data);
+        alert("payment success");
+      })
     }
     // console.log("payment success");
   };

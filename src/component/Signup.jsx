@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Modal from "./Modal";
+// import Modal from "./Modal";
 import { AuntContext } from "../context/AuntProvider";
-import axios from "axios";
+// import axios from "axios";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Signup = () => {
@@ -23,31 +23,30 @@ const Signup = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    createUser(email, password).then((result) => {
-      // Signed up 
-      const user = result.user;
-      updateProfileUser(data.name, data.photoURL).then(()=> {
-        const userInfo = {
-          name: data.name,
-          email: data.email,
-        }
-        axios.post("http://localhost:6001/user", userInfo)
-        .then((response) => {
-          alert("signup successfully done!");
-          navigate
-        })
-      }) 
-      alert("Account creation successfully done!")
-      document.getElementById("my_modal_5").close()
-      navigate(from, {replace: true})
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    })
-  }
+    // console.log(email, password)
+    createUser(email, password)
+      .then((result) => {
+        // Signed up
+        const user = result.user;
+        updateProfileUser(data.email, data.photoURL).then(() => {
+          const userInfor = {
+            name: data.name,
+            email: data.email,
+          };
+          axiosPublic.post("/user", userInfor)
+            .then((response) => {
+              // console.log(response);
+              alert("Signin successful!");
+              navigate("/", { replace: true });
+            });
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
   // login with Gmail
   const handleRegister = () => {
     sighUpWithGmail()
@@ -58,7 +57,7 @@ const Signup = () => {
           email: result?.user?.email,
         };
         axiosPublic
-          .post("/users", userInfor)
+          .post("/user", userInfor)
           .then((response) => {
             // console.log(response);
             alert("Signin successful!");

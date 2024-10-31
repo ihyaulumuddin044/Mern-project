@@ -26,11 +26,11 @@ const Profile = ({ user }) => {
           >
             <div className="w-10 rounded-full z-0">
               {user.photoURL ? (
-                <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+                <img alt="" src={user.photoURL} />
               ) : (
                 <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  alt=""
+                  src="https://i.ibb.co/4pVJy6S/user.png"
                 />
               )}
             </div>

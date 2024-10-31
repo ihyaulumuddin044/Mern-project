@@ -3,8 +3,8 @@ import useCart from "../../hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuntContext } from "../../context/AuntProvider";
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const CardPage = () => {
   const [card, refetch] = useCart();
@@ -23,17 +23,16 @@ const CardPage = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:6001/cart/${item._id}`, { method: "DELETE" })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
+        axios
+          .delete(`http://localhost:6001/cart/${item._id}`)
+          .then((response) => {
+            if (response) {
               refetch();
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success",
-              });
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
             }
+          })
+          .catch((error) => {
+            console.error(error);
           });
       }
     });
@@ -45,11 +44,11 @@ const CardPage = () => {
   };
 
   // hendle calculate total price all items
-const  calculatePriceAll = card.reduce((total, item) => {
-  return total + calculatePrice(item);
-}, 0)
+  const calculatePriceAll = card.reduce((total, item) => {
+    return total + calculatePrice(item);
+  }, 0);
 
-const orderTotal = calculatePriceAll
+  const orderTotal = calculatePriceAll;
   // handleDecrease function
   const handleDecrease = (item) => {
     // console.log(item._id);
@@ -75,35 +74,40 @@ const orderTotal = calculatePriceAll
           refetch();
           setCardItems(updatedCard);
         });
-    }else{
-      alert("items can`t be less than 1")
+    } else {
+      alert("items can`t be less than 1");
     }
   };
 
   // handleIncrease function
-  const handleIncrease = (item) => {
-    // console.log(item._id);
-    fetch(`http://localhost:6001/cart/${item._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify({ quantity: item.quantity + 1 }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const updatedCard = cardItems.map((cardItems) => {
-          if (cardItems._id === item._id) {
+  const handleIncrease = async (item) => {
+    try {
+      const response = await fetch(`http://localhost:6001/cart/${item._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity: item.quantity + 1 }),
+      });
+
+      if (response.ok) {
+        const updatedCart = cardItems.map((cartItem) => {
+          if (cartItem.id === item.id) {
             return {
-              ...cardItems,
-              quantity: cardItems.quantity + 1,
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
             };
           }
-          return cardItems;
+          return cartItem;
         });
-        refetch();
-        setCardItems(updatedCard);
-      });
+        await refetch();
+        setCardItems(updatedCart);
+      } else {
+        console.error("Failed to update quantity");
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
   };
 
   return (
@@ -218,11 +222,10 @@ const orderTotal = calculatePriceAll
             Total Items: <span className="text-red">{card.length}</span>{" "}
           </p>
           <p>Total Price: ${orderTotal.toFixed(2)}</p>
-          <Link to = "/process-payment" >
-          <button className="btn bg-green text-white">
-          Procceed checkout
-
-          </button>
+          <Link to="/process-payment">
+            <button className="btn bg-green text-white">
+              Procceed checkout
+            </button>
           </Link>
         </div>
       </div>

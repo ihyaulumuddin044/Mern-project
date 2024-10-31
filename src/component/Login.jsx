@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAuth from "../hooks/useAuth";
-import { AuntContext } from "../context/AuntProvider";
+// import { AuntContext } from "../context/AuntProvider";
 
 
 const Login = () => {
@@ -38,11 +38,11 @@ const Login = () => {
           email: data.email,
         };
         axiosPublic
-          .post("/users", userInfor)
+          .post("/user", userInfor)
           .then((response) => {
             // console.log(response);
             alert("Signin successful!");
-            navigate(from, { replace: true });
+            navigate("/", { replace: true });
           });
         // console.log(user);
         // ...
