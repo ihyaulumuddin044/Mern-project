@@ -14,6 +14,7 @@ import Addmenu from "../pages/dashboard/admin/Addmenu";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
 import Payment from "../pages/Shoping/Payment";
+import Ordes from "../pages/dashboard/Ordes";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/card-page",
         element: <CardPage />,
+      },
+      {
+        path: "/order",
+        element: <Ordes />,
       },
       {
         path: "process-payment",

@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FaPaypal } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 // import { trace } from "../../../../Foodis-server/api/routes/menuRouters";
 
 const CheckoutForm = ({ price, cart }) => {
@@ -13,6 +14,7 @@ const CheckoutForm = ({ price, cart }) => {
 
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (typeof price !== "number" || price <= 1) {
@@ -78,10 +80,20 @@ const CheckoutForm = ({ price, cart }) => {
       console.log(paymentInfo);
 
       // send payment info to the server
-      axiosSecure.post("/payments", paymentInfo).then((res) => {
-        console.log(res.data);
-        alert("payment success");
-      })
+      axiosSecure
+        .post("/payments", paymentInfo)
+        .then((res) => {
+          console.log(res.data);
+          alert("payment success");
+          navigate("/order");
+        })
+        .catch((error) => {
+          console.error(
+            "Error sending payment info to server:",
+            error.response ? error.response.data : error.message
+          );
+          alert("Failed to process payment. Please try again." + error.message);
+        });
     }
     // console.log("payment success");
   };
